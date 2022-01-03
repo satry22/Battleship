@@ -1,7 +1,7 @@
 from random import randint
 
 
-print('Welcome to Battleship for 1 player! Good luck!')
+print('Welcome to Battleship for 1 player! Good luck!\n')
 
 
 LETTERS_TO_NUMS = {
@@ -46,12 +46,18 @@ class Battleship:
         try:
             numbers = input('Please enter a number from the board: ')
             while numbers not in ('1', '2', '3', '4', '5', '6', '7', '8'):
-                print('That is not a valid choice, please select a number between 1-8.')
+                print(
+                    'That is not a valid choice' 
+                    ' please select a number between 1-8.'
+                )
                 numbers = input('Please enter a number from the board: ')
 
             letters = input('Please enter a letter from the board: ').upper()
             while letters not in ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'):
-                print('That is not a valid choice, please select a letter from A-H: ')
+                print(
+                    'That is not a valid choice'
+                    ' please select a letter from A-H: '
+                )
                 letters = input(
                     'Please enter a letter from the board: '
                 ).upper()
