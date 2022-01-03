@@ -16,7 +16,4 @@ class Ship():
             return "submarine"
 
 
-shipOne = Ship(3)
-shipTwo = Ship(2)
-
 print('string')
