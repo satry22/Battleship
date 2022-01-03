@@ -1,5 +1,9 @@
 from random import randint
 
+
+print('Welcome to Battleship for 1 player! Good luck!')
+
+
 LETTERS_TO_NUMS = {
     'A': 0,
     'B': 1,
@@ -31,29 +35,29 @@ class Battleship:
 
     def create_ships(self):
         for i in range(4):
-            self.x_row, self.y_column = randint(0, 7), randint(0, 7)
-            while self.board[self.x_row][self.y_column] == 'X':
-                self.x_row, self.y_column = randint(0, 7), randint(0, 7)
-            self.board[self.x_row][self.y_column] = 'X'
+            self.numbers, self.letters = randint(0, 7), randint(0, 7)
+            while self.board[self.numbers][self.letters] == 'X':
+                self.numbers, self.letters = randint(0, 7), randint(0, 7)
+            self.board[self.numbers][self.letters] = 'X'
         return self.board
 
     @staticmethod
     def get_user_input():
         try:
-            x_row = input('Enter the row of the ship: ')
-            while x_row not in ('1', '2', '3', '4', '5', '6', '7', '8'):
-                print('Not a valid choice, please select a valid row')
-                x_row = input('Enter the row of the ship: ')
+            numbers = input('Please enter a number from the board: ')
+            while numbers not in ('1', '2', '3', '4', '5', '6', '7', '8'):
+                print('That is not a valid choice, please select a number between 1-8.')
+                numbers = input('Please enter a number from the board: ')
 
-            y_column = input('Enter the letter of the ship: ').upper()
-            while y_column not in ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'):
-                print('Not a valid choice, please select a valid column: ')
-                y_column = input(
-                    'Enter the column letter of the ship: '
+            letters = input('Please enter a letter from the board: ').upper()
+            while letters not in ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'):
+                print('That is not a valid choice, please select a letter from A-H: ')
+                letters = input(
+                    'Please enter a letter from the board: '
                 ).upper()
-            return int(x_row) - 1, LETTERS_TO_NUMS[y_column]
+            return int(numbers) - 1, LETTERS_TO_NUMS[letters]
         except ValueError and KeyError:
-            print('Not a valid input')
+            print('That is not a valid input')
             return Battleship.get_user_input()
 
     def count_hit_ships(self):
@@ -77,22 +81,22 @@ def RunGame():
             user_guess_board.board[user_x_row][user_y_column] == '-' or
             user_guess_board.board[user_x_row][user_y_column] == 'X'
         ):
-            print('You guessed that one already')
+            print('You already made that guess.')
             user_x_row, user_y_column = Battleship.get_user_input()
         if computer_board.board[user_x_row][user_y_column] == 'X':
-            print('You sunk one of my battleships')
+            print('Yay for you! You sunk one of my battleships')
             user_guess_board.board[user_x_row][user_y_column] = 'X'
         else:
-            print('You missed!')
+            print('Sorry, you missed!')
             user_guess_board.board[user_x_row][user_y_column] = '-'
         if Battleship.count_hit_ships(user_guess_board) == 5:
-            print('You hit all 5 battleships!')
+            print('Congratulations, you just hit all of my battleships!')
             break
         else:
             turns -= 1
-            print(f'You have {turns} turns remaining')
+            print(f'You have {turns} turns remaining.')
             if turns == 0:
-                print("I'm sorry, you ran out of turns")
+                print("I'm sorry, you ran out of turns.")
                 GameBoard.print_board(user_guess_board)
                 break
 
