@@ -1,84 +1,129 @@
 from random import randint
 
-COMPUTER_BOARD = [[' '] * 6 for x in range(6)]
-"""
-Computers board
-"""
-GUESS_BOARD = [[' '] * 6 for x in range(6)]
-"""
-Players guessing board
-"""
 
-letters_to_nums = {'A':0, 'B':1, 'C':2, 'D':3, 'E':4, 'F':5}
+print('Welcome to Battleship for 1 player! Good luck!\n')
 
-def print_board(board):
-    """
-    Creates board
-    """
-    print('  A B C D E F')
-    print('  -----------')
-    row_number = 1
-    for row in board:
-        print('%d|%s|' % (row_number, '|'.join(row)))
-        row_number += 1
 
-def create_ships(board):
-    """
-    Creates Ship locations
-    """
-    for ship in range(4):
-        ship_row, ship_column = randint(0,5), randint(0,5)
-        while board[ship_row][ship_column] == 'X':
-            ship_row, ship_column = randint(0,5), randint(0,5)
-        board[ship_row][ship_column] = 'X'
-            
-def get_ship_location():
-    """
-    Asks for Player to enter guess
-    """
-    row = input('Please enter a ship row 1-6: ')
-    while row not in '123456':
-        print('Please enter a valid row')
-        row = input('Please enter a ship row 1-6: ')
-    column = input('Please enter a ship column A-F: ').upper()
-    while column not in 'ABCDEF':
-        print('Please eneter a valid colum')
-        column = input('Please eneter a ship column A-F: ').upper()
-    return int(row) - 1, letters_to_nums[column]
+LETTERS_TO_NUMS = {
+    'A': 0,
+    'B': 1,
+    'C': 2,
+    'D': 3,
+    'E': 4,
+    'F': 5,
+    'G': 6,
+    'H': 7
+}
 
-def count_hit_ships(board):
-    """
-    Counts hit ships. Four ships wins.
-    """
-    count = 0
-    for row in board:
-        for column in row:
-            if column == 'X':
-                count += 1
-    return count
 
-create_ships(COMPUTER_BOARD)
-"""
-Uses all of the above functions to play the game.
-"""
-turns = 8
-while turns > 0:
-    print('Welcome to Battleship!')
-    print_board(GUESS_BOARD)
-    row, column = get_ship_location()
-    if GUESS_BOARD[row][column] == '-':
-        print('Oops! You already made that guess')
-    elif COMPUTER_BOARD[row][column] == 'X':
-        print('Congratulations, you just hit one of the Computers battleship!')
-        turns -= 1
-    else:
-        print('Sorry, you missed this time')
-        GUESS_BOARD[row][column] = '-'
-        turns -= 1
-    if count_hit_ships(GUESS_BOARD) == 4:
-        print('Congratulations, you won the game!')
-        break
-    print('You have ' + str(turns) + ' turns left.')
-    if turns == 0:
-        print('Sorry, the game is over.')
-        break
+class GameBoard:
+    """
+    Contains the main function that has the loop that controls the game.
+    """
+    def __init__(self, board):
+        self.board = board
+
+    def print_board(self):
+        print('  A B C D E F G H')
+        print('  ---------------')
+        row_number = 1
+        for row in self.board:
+            print('%d|%s|' % (row_number, '|'.join(row)))
+            row_number += 1
+
+
+class Battleship:
+    """
+    Creates the ships
+    """
+    def __init__(self, board):
+        self.board = board
+
+    def create_ships(self):
+        for i in range(4):
+            self.numbers, self.letters = randint(0, 7), randint(0, 7)
+            while self.board[self.numbers][self.letters] == 'X':
+                self.numbers, self.letters = randint(0, 7), randint(0, 7)
+            self.board[self.numbers][self.letters] = 'X'
+        return self.board
+
+    @staticmethod
+    def get_user_input():
+        """
+        Gets the users choice to try and hit the computers ships.
+        """    
+        try:
+            numbers = input('Please enter a number from the board: ')
+            while numbers not in ('1', '2', '3', '4', '5', '6', '7', '8'):
+                print(
+                    'That is not a valid choice' 
+                    ' please select a number between 1-8.'
+                )
+                numbers = input('Please enter a number from the board: ')
+
+            letters = input('Please enter a letter from the board: ').upper()
+            while letters not in ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'):
+                print(
+                    'That is not a valid choice'
+                    ' please select a letter from A-H: '
+                )
+                letters = input(
+                    'Please enter a letter from the board: '
+                ).upper()
+            return int(numbers) - 1, LETTERS_TO_NUMS[letters]
+        except ValueError and KeyError:
+            print('That is not a valid input')
+            return Battleship.get_user_input()
+
+    def count_hit_ships(self):
+        """
+        Counts to see if there are any ships hit.
+        """
+        hit_ships = 0
+        for row in self.board:
+            for column in row:
+                if column == 'X':
+                    hit_ships += 1
+        return hit_ships
+
+
+def RunGame():
+    """
+    Runs the game and print interactive comments to user.
+    """
+    computer_board = GameBoard([[' '] * 8 for i in range(8)])
+    user_guess_board = GameBoard([[' '] * 8 for i in range(8)])
+    Battleship.create_ships(computer_board)
+    turns = 10
+    while turns > 0:
+        GameBoard.print_board(user_guess_board)
+        user_x_row, user_y_column = Battleship.get_user_input()
+        while (
+            user_guess_board.board[user_x_row][user_y_column] == '-' or
+            user_guess_board.board[user_x_row][user_y_column] == 'X'
+        ):
+            print('You already made that guess.')
+            user_x_row, user_y_column = Battleship.get_user_input()
+        if computer_board.board[user_x_row][user_y_column] == 'X':
+            print('Yay for you! You sunk one of my battleships')
+            user_guess_board.board[user_x_row][user_y_column] = 'X'
+        else:
+            print('Sorry, you missed!')
+            user_guess_board.board[user_x_row][user_y_column] = '-'
+        if Battleship.count_hit_ships(user_guess_board) == 5:
+            print('Congratulations, you just hit all of my battleships!')
+            break
+        else:
+            turns -= 1
+            print(f'You have {turns} turns remaining.')
+            if turns == 0:
+                print("I'm sorry, you ran out of turns.")
+                GameBoard.print_board(user_guess_board)
+                break
+
+
+if __name__ == '__main__':
+    RunGame()
+    """
+    Plays the Game.
+    """
