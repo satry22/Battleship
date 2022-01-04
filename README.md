@@ -8,14 +8,14 @@ The user starts the game by choosing a place on the computers hidden board to tr
 
 ## Features
 
-  - Random game board
-  - User plays computer
-  - The game accepts user input
-  - The game counts down number of tries
+  - Random game board.
+  - User plays computer.
+  - The game accepts user input.
+  - The game counts down number of tries.
 
   ![Screenshot](docs/screenshot2.png)
 
-  - Input validation and checks for errors             
+  - Input validation and checks for errors.            
   - The user must choose numbers or letters valid and cannot leave a blank space.
 
     ![Screenshot](docs/screenshot3.png)
@@ -28,8 +28,9 @@ The user starts the game by choosing a place on the computers hidden board to tr
 
 ## Testing
 
-- I have tested the game in GitPods terminal, checked and corrected any errors
+- I have tested the game in GitPods terminal, checked and corrected any errors.
 - I have run my code through a PEP8 linter without problems.
+- I have tested the game in Heroku terminal, no errors.
 
 ## Bugs
 
@@ -44,6 +45,10 @@ The method parameter was not required at any time and so the method was modified
 
 ## Deployment
 I have used a mock terminal by Heroku to deploy my project.
+- I created a new Heroku app.
+- I set the buildpacks to Python and NodeJS.
+- I linked the Heroku app to the repository.
+- I clicked on deploy.
 
 ## Credits
 A good friend on Slack who has helped me sort out bugs.
