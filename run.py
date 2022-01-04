@@ -1,9 +1,6 @@
 from random import randint
 
 
-print('Welcome to Battleship for 1 player! Good luck!\n')
-
-
 LETTERS_TO_NUMS = {
     'A': 0,
     'B': 1,
@@ -34,7 +31,7 @@ class GameBoard:
 
 class Battleship:
     """
-    Creates the ships
+    Creates the ships randomly on the computers board.
     """
     def __init__(self, board):
         self.board = board
@@ -51,12 +48,12 @@ class Battleship:
     def get_user_input():
         """
         Gets the users choice to try and hit the computers ships.
-        """    
+        """
         try:
             numbers = input('Please enter a number from the board: ')
             while numbers not in ('1', '2', '3', '4', '5', '6', '7', '8'):
                 print(
-                    'That is not a valid choice' 
+                    'That is not a valid choice'
                     ' please select a number between 1-8.'
                 )
                 numbers = input('Please enter a number from the board: ')
@@ -118,7 +115,6 @@ def RunGame():
             print(f'You have {turns} turns remaining.')
             if turns == 0:
                 print("I'm sorry, you ran out of turns.")
-                GameBoard.print_board(user_guess_board)
                 break
 
 

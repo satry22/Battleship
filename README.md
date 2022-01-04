@@ -1,31 +1,51 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Saras Battleships
 
-Welcome satry22,
+Battleship is a Python Terminal game for a single player. The user can play the computer to try and sink their battleships in a certain number of times.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+## How the game is played
 
-## Reminders
+The user starts the game by choosing a place on the computers hidden board to try and hit a randomly placed ship. There are five single ships placed on the board. You have ten times to try and hit the ships, and if you hit all five -you win the game!
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+## Features
 
-## Creating the Heroku app
+  - Random game board
+  - User plays computer
+  - The game accepts user input
+  - The game counts down number of tries
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+  ![Screenshot](docs/screenshot2.png)
 
-1. `heroku/python`
-2. `heroku/nodejs`
+  - Input validation and checks for errors             
+  - The user must choose numbers or letters valid and cannot leave a blank space.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+    ![Screenshot](docs/screenshot3.png)
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+### Features Left to Implement
 
-Connect your GitHub repository and deploy as normal.
+- A choice of board size.
+- An ability to choose size of ships.
+- An ability for the computer to sink ships on the users board.
 
-## Constraints
+## Testing
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+- I have tested the game in GitPods terminal, checked and corrected any errors
+- I have run my code through a PEP8 linter without problems.
 
------
-Happy coding!
+## Bugs
+
+- Incorrect row/column input was accepted.
+Validation was originally done by checking the input was contained in a string. The string contained all possible values but this allowed for consecutive characters to be validated (ie, 12)
+To resolve this issue, each valid value has been added into a tuple as a separate item.
+-  If no input was provided for row/column, the program would error and close.
+The tutorial had a call to a class method that required a parameter and this was not being passed.
+The method parameter was not required at any time and so the method was modified to a staticmethod instead, allowing it to be called without the class being instantiated.
+
+- No bugs left unsolved.
+
+## Deployment
+I have used a mock terminal by Heroku to deploy my project.
+
+## Credits
+A good friend on Slack who has helped me sort out bugs.
+Code Institute for deployment terminal.
+GitPod for writing my code.
